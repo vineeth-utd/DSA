@@ -2,32 +2,19 @@ class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
         m, n = len(matrix), len(matrix[0])
         max_length = 0
-        memo = [[-1 for _ in range(n+1)] for _ in range(m+1)]
+        memo = [[-1 for _ in range(n)] for _ in range(m)]
 
         def getLongestIncreasingPath(i, j):
-            if i < 0 or i >= m or j < 0 or j >= n:
-                return 0
-
             if memo[i][j] != -1:
                 return memo[i][j]
 
-            left = right = top = bottom = 0
+            best = 1
+            for di, dj in [(1,0), (-1,0), (0,1), (0,-1)]:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < m and 0 <= nj < n and matrix[ni][nj] > matrix[i][j]:
+                    best = max(best, 1 + getLongestIncreasingPath(ni, nj))
 
-            if j-1 >= 0 and matrix[i][j-1] > matrix[i][j]:
-                left = getLongestIncreasingPath(i, j-1)
-            if i+1 < m and matrix[i+1][j] > matrix[i][j]:
-                bottom = getLongestIncreasingPath(i+1, j)
-            if j+1 < n and matrix[i][j+1] > matrix[i][j]:
-                right = getLongestIncreasingPath(i, j+1)
-            if i-1 >= 0 and matrix[i-1][j] > matrix[i][j]:
-                top = getLongestIncreasingPath(i-1, j)
-
-            memo[i][j] = 1 + max(
-                left,
-                bottom,
-                right,
-                top
-            )
+            memo[i][j] = best
             return memo[i][j]
         
         for r in range(m):
