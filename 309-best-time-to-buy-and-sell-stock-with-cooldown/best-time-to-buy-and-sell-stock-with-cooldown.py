@@ -1,6 +1,12 @@
-# # Bottom up tabulation
+# Bottom up tabulation
 # class Solution:
 #     def maxProfit(self, prices: List[int]) -> int:
+#         n = len(prices)
+#         dp = [[0] * 2 for _ in range(n+2)]
+        
+#         for curr_idx in range(n-1, -1, -1):
+#             for can_buy in [0, 1]:
+
 
 
 # Top down memoization
@@ -16,7 +22,6 @@ class Solution:
             if memo[curr_idx][can_buy] != -1:
                 return memo[curr_idx][can_buy]
             
-            print((curr_idx, can_buy))
             skip_profit = getMaxProfit(curr_idx + 1, can_buy)
 
             action_profit = 0
