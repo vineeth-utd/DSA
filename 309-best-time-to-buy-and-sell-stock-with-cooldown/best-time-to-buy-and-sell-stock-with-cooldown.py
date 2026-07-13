@@ -1,8 +1,13 @@
+# # Bottom up tabulation
+# class Solution:
+#     def maxProfit(self, prices: List[int]) -> int:
+
+
+# Top down memoization
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
-        memo = [[-1 for _ in [0, 1]] for _ in range(n+2)]
-        print(memo)
+        memo = [[-1] * 2 for _ in range(n+2)]
 
         def getMaxProfit(curr_idx, can_buy):
             if curr_idx >= n:
